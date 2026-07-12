@@ -25,6 +25,10 @@ html[data-theme="dark"]{
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
 a{color:inherit}
+a:hover{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.skip{position:absolute;left:-999px;top:8px;z-index:100;background:var(--accent);color:#fff;padding:10px 16px;border-radius:8px;font-weight:700;text-decoration:none}
+.skip:focus{left:12px}
 /* Header */
 .hdr{position:sticky;top:0;z-index:50;background:var(--panel);border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
 .hdr-in{max-width:1280px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;gap:16px}
@@ -35,6 +39,9 @@ a{color:inherit}
 .hdr-tools{margin-left:auto;display:flex;align-items:center;gap:10px}
 .tbtn{background:var(--panel2);border:1px solid var(--line);color:var(--muted);width:38px;height:38px;border-radius:10px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center}
 .tbtn:hover{color:var(--ink);border-color:var(--accent)}
+.pdfbtn{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 14px;border-radius:10px;background:var(--panel2);border:1px solid var(--line);color:var(--muted);font-size:12.5px;font-weight:700;text-decoration:none;font-family:inherit}
+.pdfbtn:hover{color:var(--accent);border-color:var(--accent)}
+@media(max-width:560px){.pdfbtn{padding:0 10px;font-size:12px}}
 /* stats strip */
 .stats{max-width:1280px;margin:0 auto;padding:16px 22px 4px;display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
 .stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow)}
@@ -48,6 +55,8 @@ a{color:inherit}
 .pyr h3{margin:0 0 10px;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:700}
 .prow{display:flex;align-items:center;gap:9px;margin:5px 0;cursor:pointer;border-radius:8px;padding:4px 5px}
 .prow:hover{background:var(--panel2)}
+.prow{border:1px solid transparent}
+.prow.on{background:var(--chipbg);border-color:var(--accent)}
 .pbar{height:22px;border-radius:5px;flex:none;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:11px}
 .prow .pl{font-size:11.5px;color:var(--ink);font-weight:500;line-height:1.2}
 .nav{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px;box-shadow:var(--shadow);max-height:46vh;overflow:auto}
@@ -74,6 +83,9 @@ a{color:inherit}
 .chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
 .chip .cd{width:8px;height:8px;border-radius:50%}
 .sep{width:1px;height:18px;background:var(--line);margin:0 4px}
+.fstat{display:flex;align-items:center;gap:10px;margin-top:11px;font-size:12px;color:var(--faint);flex-wrap:wrap}
+.reset{background:var(--panel2);border:1px solid var(--line);color:var(--muted);border-radius:20px;padding:5px 13px;font-size:12px;cursor:pointer;font-family:inherit;font-weight:600}
+.reset:hover{border-color:var(--accent);color:var(--ink)}
 /* section cards */
 .sec{background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden;scroll-margin-top:150px}
 .sec-h{display:flex;align-items:center;gap:12px;padding:15px 17px;cursor:pointer;border-left:5px solid var(--sc)}
@@ -111,8 +123,11 @@ mark{background:var(--gold);color:#1a1a1a;border-radius:3px;padding:0 2px}
 .foot .credit a{color:var(--accent);text-decoration:none;font-weight:600}
 .foot .credit a:hover{text-decoration:underline}
 @media(max-width:1000px){
-  .layout{grid-template-columns:1fr}.side{position:static;flex-direction:column}
+  .layout{grid-template-columns:1fr}
+  .side{position:static;flex-direction:column;order:2}
+  .layout>main{order:1}
   .stats{grid-template-columns:repeat(3,1fr)}.controls{position:static}
+  .nav{max-height:none}
 }
 @media(max-width:560px){.stats{grid-template-columns:repeat(2,1fr)}.brand .tag{display:none}}
 /* suggest tool */
@@ -170,6 +185,10 @@ mark{background:var(--gold);color:#1a1a1a;border-radius:3px;padding:0 2px}
 .gtable th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--faint);font-weight:700;padding:8px 10px;border-bottom:2px solid var(--line)}
 .gtable td{padding:11px 10px;border-bottom:1px solid var(--line2);vertical-align:top}
 .gtable tr:last-child td{border-bottom:0}
+.gtable tr.soonrow td{background:rgba(224,169,46,.07)}
+.nextbanner{display:flex;flex-wrap:wrap;align-items:center;gap:12px;background:linear-gradient(135deg,rgba(224,169,46,.15),rgba(18,164,160,.1));border:1px solid var(--line);border-radius:12px;padding:13px 16px;margin-bottom:16px;font-size:13px;line-height:1.5}
+.nextbanner b{color:var(--ink)}
+.nextbanner .nb-ic{font-size:20px}
 .gtable .prog{font-weight:600;color:var(--ink)}
 .gtable .win{color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
 .badge{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 9px;border-radius:20px;white-space:nowrap}
@@ -211,6 +230,7 @@ html[data-theme="dark"] .b-closed{color:#f28a8a}html[data-theme="dark"] .b-soon{
 </style>
 </head>
 <body>
+<a class="skip" href="#search">Перейти к поиску документов</a>
 <header class="hdr">
   <div class="hdr-in">
     <div class="brand">
@@ -222,6 +242,7 @@ html[data-theme="dark"] .b-closed{color:#f28a8a}html[data-theme="dark"] .b-soon{
       <button data-view="grants">🎓 Гранты</button>
     </div>
     <div class="hdr-tools">
+      <a class="pdfbtn" href="vse-dlya-uchenogo.pdf" download title="Скачать первоисточник (PDF)">⬇ PDF</a>
       <button class="tbtn" id="theme" title="Сменить тему">🌙</button>
     </div>
   </div>
@@ -248,9 +269,10 @@ html[data-theme="dark"] .b-closed{color:#f28a8a}html[data-theme="dark"] .b-soon{
       </div>
       <div class="chips" id="tierChips"></div>
       <div class="chips" id="srcChips"></div>
+      <div class="fstat" id="fstat"><span id="fcount"></span><button class="reset hidden" id="resetBtn">✕ Сбросить фильтры</button></div>
     </div>
     <div id="sections"></div>
-    <div class="nores hidden" id="nores">Ничего не найдено — измените запрос или сбросьте фильтры.</div>
+    <div class="nores hidden" id="nores">Ничего не найдено по вашему запросу.<div style="margin-top:14px"><button class="reset" id="resetBtn2">✕ Сбросить поиск и фильтры</button></div></div>
   </main>
 </div>
 </div><!-- /viewMap -->
@@ -276,6 +298,7 @@ html[data-theme="dark"] .b-closed{color:#f28a8a}html[data-theme="dark"] .b-soon{
   <div class="gsec">
     <h3><span class="em">📅</span>Календарь конкурсов и сроки</h3>
     <p class="gsub">Типичные ежегодные окна приёма заявок. Цикл 2026–2028 закрыт по состоянию на июль 2026; объявления по циклу 2027–2029 ожидаются ориентировочно осенью 2026 — проверяйте актуальные даты на ncste.kz.</p>
+    <div class="nextbanner"><span class="nb-ic">🔔</span><div><b>Сейчас приём закрыт.</b> Ближайшие окна ориентировочно — <b>сентябрь–ноябрь 2026</b> (проекты и молодые учёные) и <b>декабрь 2026</b> (коммерциализация). Точные даты — на <a class="lnk gov" href="https://www.ncste.kz/ru/competition" target="_blank" rel="noopener">🔗 ncste.kz</a>.</div></div>
     <table class="gtable">
       <thead><tr><th>Программа</th><th>Окно приёма (типовое)</th><th>Реализация</th><th>Статус</th></tr></thead>
       <tbody>
@@ -283,7 +306,7 @@ html[data-theme="dark"] .b-closed{color:#f28a8a}html[data-theme="dark"] .b-soon{
         <tr><td class="prog">Гранты молодых учёных</td><td class="win">~25 сен → 25 окт</td><td>3 года</td><td><span class="badge b-closed">2026–2028 закрыт</span></td></tr>
         <tr><td class="prog">Молодые учёные «Жас ғалым»</td><td class="win">~29 сен → 29 окт</td><td>3 года</td><td><span class="badge b-closed">2026–2028 закрыт</span></td></tr>
         <tr><td class="prog">Программно-целевое финансирование (ПЦФ)</td><td class="win">~6 окт → 6 ноя</td><td>3 года</td><td><span class="badge b-closed">по отраслевым мин-вам</span></td></tr>
-        <tr><td class="prog">Коммерциализация РННТД</td><td class="win">~10 дек → 10 янв</td><td>3 года</td><td><span class="badge b-soon">ожидается кон. 2026</span></td></tr>
+        <tr class="soonrow"><td class="prog">Коммерциализация РННТД</td><td class="win">~10 дек → 10 янв</td><td>3 года</td><td><span class="badge b-soon">ожидается кон. 2026</span></td></tr>
         <tr><td class="prog">Базовое финансирование</td><td class="win">по перечню организаций</td><td>ежегодно</td><td><span class="badge b-annual">постоянное</span></td></tr>
       </tbody>
     </table>
@@ -340,7 +363,7 @@ html[data-theme="dark"] .b-closed{color:#f28a8a}html[data-theme="dark"] .b-soon{
 
   <div class="gsec">
     <h3><span class="em">⚖️</span>Ключевые нормативные документы для грантов</h3>
-    <p class="gsub">Прямые ссылки на официальные акты (открываются на «Карте» с полным контекстом)</p>
+    <p class="gsub">Прямые ссылки на официальные акты. Полный контекст и соседние документы — на вкладке «Карта».</p>
     <div class="rlist">
       <div class="ritem"><div class="rt">Закон РК «О науке и технологической политике»</div><div class="rl"><a class="lnk adilet" href="https://adilet.zan.kz/rus/docs/Z2400000103" target="_blank" rel="noopener">🔗 adilet</a></div></div>
       <div class="ritem"><div class="rt">Правила финансирования науки</div><div class="rl"><a class="lnk adilet" href="https://adilet.zan.kz/rus/docs/V2300033613" target="_blank" rel="noopener">🔗 adilet</a></div></div>
@@ -555,206 +578,8 @@ const DATA = [
     {t:"Общий классификатор видов экономической деятельности", p:40, links:["https://prg.kz/document/?doc_id=33987425"]},
   ]},
 ];
-const TIERS=["Высший уровень","Законы (профильный)","Постановления Правительства","Приказы министерств","Стандарты"];
-const TIER_COLOR={"Высший уровень":"var(--c1)","Законы (профильный)":"var(--c2)","Постановления Правительства":"var(--c3)","Приказы министерств":"var(--c4)","Стандарты":"var(--c9)"};
-const CVAR={c1:"var(--c1)",c2:"var(--c2)",c3:"var(--c3)",c4:"var(--c4)",c9:"var(--c9)"};
-function host(u){try{const h=new URL(u).hostname.replace("www.","");if(h.includes("adilet"))return["adilet","adilet"];if(h.includes("prg"))return["prg","prg.kz"];if(h.includes("gov.kz"))return["gov","gov.kz"];if(h.includes("akorda"))return["gov","akorda"];if(h.includes("primeminister"))return["gov","pm.kz"];if(h.includes("zakon"))return["other","zakon.kz"];return["other",h.split(".")[0]]}catch(e){return["other","ссылка"]}}
-const state={q:"",tiers:new Set(),srcs:new Set()};
-const $=s=>document.querySelector(s);
-// stats
-const totalDocs=DATA.reduce((s,d)=>s+d.items.length,0);
-const totalLinks=new Set(DATA.flatMap(d=>d.items.flatMap(i=>i.links.map(u=>u.split("#")[0])))).size;
-const mnvo=DATA.find(d=>d.num==="4").items.length;
-const laws=DATA.find(d=>d.num==="6").items.length+DATA.find(d=>d.num==="7").items.length;
-const govr=DATA.find(d=>d.num==="3").items.length;
-[["Разделов",DATA.length],["Документов",totalDocs],["Ссылок",totalLinks],["Приказов МНВО",mnvo],["Кодексов и законов",laws],["Постановлений",govr]].forEach(([l,n])=>{
-  const d=document.createElement("div");d.className="stat";d.innerHTML=`<div class="n">${n}</div><div class="l">${l}</div>`;$("#stats").appendChild(d);
-});
-// pyramid
-const tierCounts={};TIERS.forEach(t=>tierCounts[t]=DATA.filter(d=>d.tier===t).reduce((s,d)=>s+d.items.length,0));
-const maxW=100,minW=44;
-$("#pyramid").innerHTML=TIERS.map((t,i)=>{
-  const w=minW+(maxW-minW)*(i/(TIERS.length-1));
-  return `<div class="prow" data-tier="${t}"><div class="pbar" style="width:${w}%;background:${TIER_COLOR[t]}">${tierCounts[t]}</div><div class="pl">${t}</div></div>`;
-}).join("");
-document.querySelectorAll(".prow").forEach(r=>r.onclick=()=>{toggleTier(r.dataset.tier);});
-// nav grouped by tier
-const nav=$("#nav");
-TIERS.forEach(t=>{
-  const secs=DATA.filter(d=>d.tier===t);if(!secs.length)return;
-  const g=document.createElement("div");g.className="navgrp";g.textContent=t;nav.appendChild(g);
-  secs.forEach(s=>{
-    const a=document.createElement("div");a.className="navlink";a.dataset.sec=s.num;
-    a.innerHTML=`<span class="dot" style="background:${CVAR[s.color]}"></span><span>${s.num}. ${s.title}</span><span class="cc">${s.items.length}</span>`;
-    a.onclick=()=>{const el=document.getElementById("sec"+s.num);el.classList.add("open");el.scrollIntoView({behavior:"smooth",block:"start"});};
-    nav.appendChild(a);
-  });
-});
-// tier chips
-const tc=$("#tierChips");tc.innerHTML='<span class="lbl">Уровень</span>';
-TIERS.forEach(t=>{const c=document.createElement("span");c.className="chip";c.dataset.tier=t;
-  c.innerHTML=`<span class="cd" style="background:${TIER_COLOR[t]}"></span>${t}`;c.onclick=()=>toggleTier(t);tc.appendChild(c);});
-// source chips
-const sc=$("#srcChips");sc.innerHTML='<span class="lbl">Источник</span>';
-[["adilet","adilet.zan.kz"],["prg","prg.kz"],["gov","gov.kz / akorda"],["other","прочие"]].forEach(([k,lbl])=>{
-  const c=document.createElement("span");c.className="chip";c.dataset.src=k;c.textContent=lbl;c.onclick=()=>toggleSrc(k);sc.appendChild(c);});
-function toggleTier(t){state.tiers.has(t)?state.tiers.delete(t):state.tiers.add(t);syncChips();render();}
-function toggleSrc(s){state.srcs.has(s)?state.srcs.delete(s):state.srcs.add(s);syncChips();render();}
-function syncChips(){
-  document.querySelectorAll("[data-tier]").forEach(el=>{if(el.classList.contains("chip")||el.classList.contains("prow"))el.classList.toggle("on",state.tiers.has(el.dataset.tier)&&el.classList.contains("chip"));});
-  document.querySelectorAll(".chip[data-src]").forEach(el=>el.classList.toggle("on",state.srcs.has(el.dataset.src)));
-}
-// render sections
-function linkChips(links){
-  if(!links.length)return '<span class="nolink">нет ссылки</span>';
-  let html=links.map(u=>{const[cls,lbl]=host(u);return `<a class="lnk ${cls}" href="${u}" target="_blank" rel="noopener">🔗 ${lbl}</a>`;}).join("");
-  html+=`<button class="copy" title="Копировать ссылку" data-url="${links[0]}">⧉</button>`;
-  return html;
-}
-const secWrap=$("#sections");
-function build(){
-  secWrap.innerHTML="";
-  DATA.forEach(s=>{
-    const el=document.createElement("section");el.className="sec";el.id="sec"+s.num;el.style.setProperty("--sc",CVAR[s.color]);
-    el.dataset.tier=s.tier;
-    el.innerHTML=`<div class="sec-h"><div class="snum">${s.num}</div><div class="st">${s.title}</div>
-      <span class="stier">${s.tier}</span><span class="scount">${s.items.length} док. · с.${s.page}</span>
-      <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m9 18 6-6-6-6"/></svg></div>
-      <div class="sec-b">${s.items.map((it,i)=>`<div class="doc" data-links='${JSON.stringify(it.links.map(u=>host(u)[0]))}'>
-        <span class="dn">${i+1}</span><div class="dt">${it.t}</div>
-        <div class="drow"><span class="pg">с. ${it.p}</span>${linkChips(it.links)}</div></div>`).join("")}</div>`;
-    el.querySelector(".sec-h").onclick=()=>el.classList.toggle("open");
-    secWrap.appendChild(el);
-  });
-  secWrap.querySelectorAll(".copy").forEach(b=>b.onclick=e=>{e.stopPropagation();navigator.clipboard.writeText(b.dataset.url);b.textContent="✓";b.classList.add("done");setTimeout(()=>{b.textContent="⧉";b.classList.remove("done")},1200);});
-}
-build();
-// filtering + search
-function render(){
-  const q=state.q.trim().toLowerCase();let anyVis=false;
-  document.querySelectorAll(".sec").forEach(sec=>{
-    const tierOk=state.tiers.size===0||state.tiers.has(sec.dataset.tier);
-    let secHasVisible=false;
-    sec.querySelectorAll(".doc").forEach(doc=>{
-      const dt=doc.querySelector(".dt");const raw=dt.textContent;
-      const textOk=!q||raw.toLowerCase().includes(q);
-      const srcs=JSON.parse(doc.dataset.links||"[]");
-      const srcOk=state.srcs.size===0||srcs.some(s=>state.srcs.has(s));
-      const vis=tierOk&&textOk&&srcOk;
-      doc.classList.toggle("hidden",!vis);
-      dt.innerHTML=(q&&textOk)?raw.replace(new RegExp("("+q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","ig"),"<mark>$1</mark>"):raw;
-      if(vis)secHasVisible=true;
-    });
-    const showSec=tierOk&&secHasVisible;
-    sec.classList.toggle("hidden",!showSec);
-    if(showSec){anyVis=true;if(q||state.srcs.size)sec.classList.add("open");}
-  });
-  $("#nores").classList.toggle("hidden",anyVis);
-  document.querySelectorAll(".navlink").forEach(n=>{const sec=document.getElementById("sec"+n.dataset.sec);n.style.display=sec.classList.contains("hidden")?"none":"";});
-}
-$("#search").addEventListener("input",e=>{state.q=e.target.value;render();});
-$("#expandAll").onclick=()=>document.querySelectorAll(".sec:not(.hidden)").forEach(s=>s.classList.add("open"));
-$("#collapseAll").onclick=()=>document.querySelectorAll(".sec").forEach(s=>s.classList.remove("open"));
-// scroll spy
-const observer=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){document.querySelectorAll(".navlink").forEach(n=>n.classList.toggle("active",n.dataset.sec===e.target.id.replace("sec","")));}})},{rootMargin:"-140px 0px -70% 0px"});
-document.querySelectorAll(".sec").forEach(s=>observer.observe(s));
-// theme
-const themeBtn=$("#theme");
-function setTheme(t){document.documentElement.dataset.theme=t;themeBtn.textContent=t==="dark"?"☀️":"🌙";try{localStorage.setItem("vu-theme",t)}catch(e){}}
-themeBtn.onclick=()=>setTheme(document.documentElement.dataset.theme==="dark"?"light":"dark");
-try{const saved=localStorage.getItem("vu-theme");if(saved)setTheme(saved);}catch(e){}
-// open first section
-document.querySelector(".sec")?.classList.add("open");
-
-// ===== Suggest / correction tool =====
-const SUBMIT_EMAIL="zakir86kz@gmail.com";
-const ovl=$("#ovl");let mode="fix";
-// populate document select (grouped)
-const fDoc=$("#fDoc");
-DATA.forEach(s=>{const og=document.createElement("optgroup");og.label=`${s.num}. ${s.title}`;
-  s.items.forEach((it,i)=>{const o=document.createElement("option");o.value=`${s.num}.${i+1}`;
-    o.textContent=`${s.num}.${i+1} — ${it.t.length>70?it.t.slice(0,70)+"…":it.t}`;og.appendChild(o);});
-  fDoc.appendChild(og);});
-// populate section select
-const nSec=$("#nSec");
-DATA.forEach(s=>{const o=document.createElement("option");o.value=s.num;o.textContent=`${s.num}. ${s.title}`;nSec.appendChild(o);});
-// open/close
-function openM(){ovl.classList.add("show");}
-function closeM(){ovl.classList.remove("show");}
-$("#fab").onclick=openM;$("#mClose").onclick=closeM;
-ovl.addEventListener("click",e=>{if(e.target===ovl)closeM();});
-document.addEventListener("keydown",e=>{if(e.key==="Escape"&&ovl.classList.contains("show"))closeM();});
-// mode toggle
-$("#mSeg").querySelectorAll("button").forEach(b=>b.onclick=()=>{
-  mode=b.dataset.mode;
-  $("#mSeg").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));
-  $("#fixFields").style.display=mode==="fix"?"":"none";
-  $("#newFields").style.display=mode==="new"?"":"none";
-});
-// find current link(s) for a selected doc key
-function docByKey(k){const[sn,idx]=k.split(".");const s=DATA.find(d=>d.num===sn);return s?{sec:s,item:s.items[+idx-1]}:null;}
-// build message
-function buildMsg(){
-  const name=$("#sName").value.trim(),mail=$("#sMail").value.trim();
-  let subject,body;
-  if(mode==="fix"){
-    const k=$("#fDoc").value,ctx=docByKey(k);
-    if(!ctx||!$("#fVal").value.trim())return null;
-    subject=`[Все для ученого] Исправление — п. ${k}`;
-    body=`ТИП: Исправление\n`+
-      `Документ: ${k} — ${ctx.item.t}\n`+
-      `Раздел: ${ctx.sec.num}. ${ctx.sec.title}\n`+
-      `Текущая ссылка: ${ctx.item.links.join(", ")||"—"}\n`+
-      `Стр. в оригинале: ${ctx.item.p}\n`+
-      `Что не так: ${$("#fType").value}\n`+
-      `Правильное значение / комментарий:\n${$("#fVal").value.trim()}\n`;
-  }else{
-    const title=$("#nTitle").value.trim();
-    if(!title)return null;
-    const sec=DATA.find(d=>d.num===$("#nSec").value);
-    subject=`[Все для ученого] Новый документ — ${title.slice(0,50)}`;
-    body=`ТИП: Новый документ\n`+
-      `Раздел: ${sec.num}. ${sec.title}\n`+
-      `Название: ${title}\n`+
-      `Ссылка(и): ${$("#nLink").value.trim()||"—"}\n`+
-      `Стр. в оригинале: ${$("#nPage").value.trim()||"—"}\n`+
-      `Комментарий:\n${$("#nNote").value.trim()||"—"}\n`;
-  }
-  body+=`\n— — —\nАвтор предложения: ${name||"—"}${mail?" <"+mail+">":""}\nОтправлено из карты «Все для ученого»`;
-  return{subject,body};
-}
-function validate(){
-  if(mode==="fix"&&!$("#fVal").value.trim()){$("#fVal").focus();return false;}
-  if(mode==="new"&&!$("#nTitle").value.trim()){$("#nTitle").focus();return false;}
-  return true;
-}
-$("#mSend").onclick=()=>{
-  if(!validate())return;const m=buildMsg();if(!m)return;
-  window.location.href=`mailto:${SUBMIT_EMAIL}?subject=${encodeURIComponent(m.subject)}&body=${encodeURIComponent(m.body)}`;
-};
-$("#mCopy").onclick=()=>{
-  if(!validate())return;const m=buildMsg();if(!m)return;
-  const txt=`Кому: ${SUBMIT_EMAIL}\nТема: ${m.subject}\n\n${m.body}`;
-  navigator.clipboard.writeText(txt).then(()=>{const b=$("#mCopy");b.textContent="✓ Скопировано";b.classList.add("ok");setTimeout(()=>{b.textContent="⧉ Скопировать";b.classList.remove("ok")},1600);});
-};
-
-// ===== Tabs: Карта / Гранты =====
-const views={map:$("#viewMap"),grants:$("#viewGrants")};
-$("#tabs").querySelectorAll("button").forEach(b=>b.onclick=()=>{
-  const v=b.dataset.view;
-  $("#tabs").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));
-  views.map.style.display=v==="map"?"":"none";
-  views.grants.style.display=v==="grants"?"":"none";
-  window.scrollTo({top:0,behavior:"smooth"});
-});
-// ===== Checklist progress =====
-(function(){
-  const boxes=[...document.querySelectorAll("#checklist input")];
-  const bar=$("#gpBar");
-  function upd(){const d=boxes.filter(b=>b.checked).length;bar.style.width=(d/boxes.length*100)+"%";
-    boxes.forEach(b=>b.closest(".citem").classList.toggle("done",b.checked));}
-  boxes.forEach(b=>b.addEventListener("change",upd));upd();
-})();
+/* Логика вынесена в app.js (DATA остаётся здесь). */
 </script>
+<script src="app.js"></script>
 </body>
 </html>
