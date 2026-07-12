@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Все для ученого — Карта научной политики РК</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#12a4a0; --teal-d:#0c7f7c; --gold:#e0a92e; --sky:#1f7ae0;
+  --c1:#d64545; --c2:#e08a2e; --c3:#3f74d6; --c4:#17a07a; --c9:#7a8aa3;
+}
+html[data-theme="light"]{
+  --bg:#f4f7fb; --bg2:#eef2f8; --panel:#ffffff; --panel2:#f7f9fc; --ink:#182233;
+  --muted:#5c6b82; --faint:#8695ab; --line:#e2e8f1; --line2:#eef2f7; --shadow:0 1px 2px rgba(20,40,80,.05),0 8px 24px rgba(20,40,80,.06);
+  --chipbg:#eef3fa; --accent:var(--teal); --brandgrad:linear-gradient(135deg,#12a4a0,#1f7ae0);
+}
+html[data-theme="dark"]{
+  --bg:#0e1420; --bg2:#0b1019; --panel:#161f30; --panel2:#1c2740; --ink:#e8edf6;
+  --muted:#9aa8be; --faint:#71809a; --line:#28344b; --line2:#202b40; --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+  --chipbg:#1c2740; --accent:#2ec7c2; --brandgrad:linear-gradient(135deg,#17b3ae,#2f88ee);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+/* Header */
+.hdr{position:sticky;top:0;z-index:50;background:var(--panel);border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
+.hdr-in{max-width:1280px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:12px}
+.mark{width:38px;height:38px;border-radius:10px;background:var(--brandgrad);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:18px;flex:none}
+.brand h1{margin:0;font-size:17px;font-weight:800;letter-spacing:-.2px}
+.brand .tag{font-size:11.5px;color:var(--muted);font-weight:500}
+.hdr-tools{margin-left:auto;display:flex;align-items:center;gap:10px}
+.tbtn{background:var(--panel2);border:1px solid var(--line);color:var(--muted);width:38px;height:38px;border-radius:10px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center}
+.tbtn:hover{color:var(--ink);border-color:var(--accent)}
+/* stats strip */
+.stats{max-width:1280px;margin:0 auto;padding:16px 22px 4px;display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow)}
+.stat .n{font-size:23px;font-weight:800;color:var(--accent);line-height:1}
+.stat .l{font-size:11px;color:var(--muted);margin-top:5px;font-weight:500}
+/* layout */
+.layout{max-width:1280px;margin:0 auto;padding:14px 22px 70px;display:grid;grid-template-columns:264px 1fr;gap:22px;align-items:start}
+/* sidebar */
+.side{position:sticky;top:86px;display:flex;flex-direction:column;gap:16px}
+.pyr{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
+.pyr h3{margin:0 0 10px;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:700}
+.prow{display:flex;align-items:center;gap:9px;margin:5px 0;cursor:pointer;border-radius:8px;padding:4px 5px}
+.prow:hover{background:var(--panel2)}
+.pbar{height:22px;border-radius:5px;flex:none;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:11px}
+.prow .pl{font-size:11.5px;color:var(--ink);font-weight:500;line-height:1.2}
+.nav{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px;box-shadow:var(--shadow);max-height:46vh;overflow:auto}
+.navgrp{font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:var(--faint);font-weight:700;margin:10px 8px 4px}
+.navgrp:first-child{margin-top:2px}
+.navlink{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;cursor:pointer;font-size:12.5px;color:var(--muted)}
+.navlink:hover{background:var(--panel2);color:var(--ink)}
+.navlink.active{background:var(--chipbg);color:var(--ink);font-weight:600}
+.navlink .dot{width:8px;height:8px;border-radius:50%;flex:none}
+.navlink .cc{margin-left:auto;font-size:10.5px;color:var(--faint);background:var(--bg2);border-radius:20px;padding:1px 7px}
+/* content controls */
+.controls{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow);position:sticky;top:86px;z-index:20;margin-bottom:14px}
+.searchrow{display:flex;gap:10px;align-items:center}
+.searchwrap{flex:1;position:relative}
+.searchwrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);opacity:.5}
+#search{width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--ink);padding:11px 12px 11px 38px;border-radius:10px;font-size:14px;outline:none;font-family:inherit}
+#search:focus{border-color:var(--accent);background:var(--panel)}
+.mini{background:var(--panel2);border:1px solid var(--line);color:var(--muted);padding:10px 12px;border-radius:10px;font-size:12.5px;cursor:pointer;white-space:nowrap;font-family:inherit}
+.mini:hover{color:var(--ink);border-color:var(--accent)}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:11px;align-items:center}
+.chips .lbl{font-size:11px;color:var(--faint);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-right:2px}
+.chip{border:1px solid var(--line);background:var(--panel2);color:var(--muted);border-radius:20px;padding:4px 12px;font-size:12px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px}
+.chip:hover{border-color:var(--accent);color:var(--ink)}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.chip .cd{width:8px;height:8px;border-radius:50%}
+.sep{width:1px;height:18px;background:var(--line);margin:0 4px}
+/* section cards */
+.sec{background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden;scroll-margin-top:150px}
+.sec-h{display:flex;align-items:center;gap:12px;padding:15px 17px;cursor:pointer;border-left:5px solid var(--sc)}
+.sec-h .snum{width:30px;height:30px;border-radius:9px;background:var(--sc);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex:none}
+.sec-h .st{font-size:16px;font-weight:700;flex:1;letter-spacing:-.2px}
+.sec-h .stier{font-size:10.5px;color:var(--muted);background:var(--chipbg);border-radius:20px;padding:2px 10px;font-weight:600}
+.sec-h .scount{font-size:12px;color:var(--muted);font-weight:500}
+.sec-h .chev{color:var(--faint);transition:transform .2s}
+.sec.open .sec-h .chev{transform:rotate(90deg)}
+.sec-b{display:none;padding:2px 17px 12px;border-top:1px solid var(--line2)}
+.sec.open .sec-b{display:block}
+.doc{padding:11px 4px 11px 30px;position:relative;border-bottom:1px dashed var(--line2)}
+.doc:last-child{border-bottom:0}
+.doc .dn{position:absolute;left:0;top:12px;font-size:11px;color:var(--faint);font-variant-numeric:tabular-nums;font-weight:600}
+.doc .dt{font-size:13.6px;font-weight:500;color:var(--ink)}
+.doc .drow{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin-top:7px}
+.pg{font-size:11px;color:var(--faint);background:var(--bg2);border-radius:6px;padding:2px 8px;font-weight:600}
+.lnk{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;text-decoration:none;border-radius:7px;padding:3px 9px;font-weight:600;border:1px solid transparent}
+.lnk.adilet{background:rgba(18,164,160,.12);color:var(--teal-d);border-color:rgba(18,164,160,.3)}
+.lnk.prg{background:rgba(224,169,46,.14);color:#a9781a;border-color:rgba(224,169,46,.32)}
+.lnk.gov{background:rgba(31,122,224,.12);color:#1a63b8;border-color:rgba(31,122,224,.3)}
+.lnk.other{background:rgba(122,138,163,.14);color:#5c6b82;border-color:rgba(122,138,163,.3)}
+html[data-theme="dark"] .lnk.adilet{color:#4fd6d1}html[data-theme="dark"] .lnk.prg{color:#f0c869}html[data-theme="dark"] .lnk.gov{color:#7fb2f5}html[data-theme="dark"] .lnk.other{color:#aab7cc}
+.lnk:hover{filter:brightness(1.05);transform:translateY(-1px)}
+.copy{background:transparent;border:1px solid var(--line);color:var(--faint);border-radius:7px;width:26px;height:24px;cursor:pointer;font-size:12px;display:inline-flex;align-items:center;justify-content:center}
+.copy:hover{color:var(--accent);border-color:var(--accent)}
+.copy.done{color:#17a07a;border-color:#17a07a}
+.nolink{font-size:11px;color:var(--faint);font-style:italic;background:var(--bg2);border-radius:6px;padding:2px 9px}
+mark{background:var(--gold);color:#1a1a1a;border-radius:3px;padding:0 2px}
+.hidden{display:none!important}
+.nores{text-align:center;color:var(--muted);padding:40px;font-style:italic}
+.foot{max-width:1280px;margin:10px auto 0;padding:18px 22px;color:var(--faint);font-size:12px;text-align:center;border-top:1px solid var(--line)}
+.foot .credit{margin-top:8px;color:var(--muted);font-size:12.5px}
+.foot .credit b{color:var(--ink);font-weight:700}
+.foot .credit a{color:var(--accent);text-decoration:none;font-weight:600}
+.foot .credit a:hover{text-decoration:underline}
+@media(max-width:1000px){
+  .layout{grid-template-columns:1fr}.side{position:static;flex-direction:column}
+  .stats{grid-template-columns:repeat(3,1fr)}.controls{position:static}
+}
+@media(max-width:560px){.stats{grid-template-columns:repeat(2,1fr)}.brand .tag{display:none}}
+/* suggest tool */
+.fab{position:fixed;right:22px;bottom:22px;z-index:60;background:var(--brandgrad);color:#fff;border:none;border-radius:26px;padding:13px 20px;font-size:13.5px;font-weight:700;font-family:inherit;cursor:pointer;box-shadow:0 6px 20px rgba(18,120,140,.4);display:flex;align-items:center;gap:8px}
+.fab:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.ovl{position:fixed;inset:0;z-index:70;background:rgba(10,18,32,.55);backdrop-filter:blur(3px);display:none;align-items:flex-start;justify-content:center;padding:40px 16px;overflow:auto}
+.ovl.show{display:flex}
+.modal{background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.4);width:100%;max-width:560px;padding:0;overflow:hidden}
+.modal-h{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}
+.modal-h .mi{width:34px;height:34px;border-radius:9px;background:var(--brandgrad);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;flex:none}
+.modal-h h2{margin:0;font-size:16px;font-weight:800}
+.modal-h .sub{font-size:11.5px;color:var(--muted)}
+.modal-h .x{margin-left:auto;background:var(--panel2);border:1px solid var(--line);color:var(--muted);width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:15px}
+.modal-b{padding:18px 22px;max-height:64vh;overflow:auto}
+.seg{display:flex;gap:6px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:4px;margin-bottom:16px}
+.seg button{flex:1;border:none;background:transparent;color:var(--muted);padding:9px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.seg button.on{background:var(--accent);color:#fff}
+.fld{margin-bottom:13px}
+.fld label{display:block;font-size:11.5px;font-weight:700;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.4px}
+.fld input,.fld select,.fld textarea{width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:9px;padding:10px 11px;font-size:13.5px;font-family:inherit;outline:none}
+.fld input:focus,.fld select:focus,.fld textarea:focus{border-color:var(--accent);background:var(--panel)}
+.fld textarea{resize:vertical;min-height:64px}
+.fld .hint{font-size:11px;color:var(--faint);margin-top:4px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.modal-f{padding:14px 22px;border-top:1px solid var(--line);display:flex;gap:10px;align-items:center}
+.btn-p{background:var(--brandgrad);color:#fff;border:none;border-radius:10px;padding:11px 18px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:7px}
+.btn-p:hover{filter:brightness(1.06)}
+.btn-s{background:var(--panel2);border:1px solid var(--line);color:var(--muted);border-radius:10px;padding:11px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.btn-s:hover{color:var(--ink);border-color:var(--accent)}
+.btn-s.ok{color:#17a07a;border-color:#17a07a}
+.modal-f .note{margin-left:auto;font-size:11px;color:var(--faint)}
+.req{color:var(--c1)}
+@media(max-width:560px){.fab{right:14px;bottom:14px;padding:12px 16px}.two{grid-template-columns:1fr}}
+/* tabs */
+.tabs{display:flex;gap:4px;background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:4px}
+.tabs button{border:none;background:transparent;color:var(--muted);padding:8px 16px;border-radius:8px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit}
+.tabs button.on{background:var(--brandgrad);color:#fff}
+@media(max-width:560px){.tabs button{padding:8px 11px;font-size:12.5px}}
+/* grants page */
+.gwrap{max-width:1120px;margin:0 auto;padding:20px 22px 70px}
+.ghero{background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:24px 26px;margin-bottom:18px;border-left:5px solid var(--teal)}
+.ghero h2{margin:0 0 8px;font-size:24px;font-weight:800;letter-spacing:-.4px}
+.ghero p{margin:0;color:var(--muted);font-size:14px;max-width:80ch}
+.gsec{background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:22px 24px;margin-bottom:18px}
+.gsec>h3{margin:0 0 4px;font-size:17px;font-weight:800;display:flex;align-items:center;gap:10px}
+.gsec>.gsub{color:var(--muted);font-size:12.5px;margin:0 0 16px}
+.gsec .em{width:30px;height:30px;border-radius:9px;background:var(--chipbg);display:flex;align-items:center;justify-content:center;font-size:16px;flex:none}
+/* funding type cards */
+.fcards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.fcard{border:1px solid var(--line);border-radius:12px;padding:15px 16px;background:var(--panel2);border-top:3px solid var(--tc)}
+.fcard h4{margin:0 0 6px;font-size:14px;font-weight:700}
+.fcard p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.5}
+/* deadlines table */
+.gtable{width:100%;border-collapse:collapse;font-size:13px}
+.gtable th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--faint);font-weight:700;padding:8px 10px;border-bottom:2px solid var(--line)}
+.gtable td{padding:11px 10px;border-bottom:1px solid var(--line2);vertical-align:top}
+.gtable tr:last-child td{border-bottom:0}
+.gtable .prog{font-weight:600;color:var(--ink)}
+.gtable .win{color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.badge{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 9px;border-radius:20px;white-space:nowrap}
+.b-closed{background:rgba(214,69,69,.13);color:#c23b3b}
+.b-soon{background:rgba(224,169,46,.16);color:#a9781a}
+.b-annual{background:rgba(18,164,160,.14);color:var(--teal-d)}
+html[data-theme="dark"] .b-closed{color:#f28a8a}html[data-theme="dark"] .b-soon{color:#f0c869}html[data-theme="dark"] .b-annual{color:#4fd6d1}
+/* steps */
+.steps{counter-reset:st;display:grid;gap:10px}
+.step{display:flex;gap:12px;align-items:flex-start;background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:12px 14px}
+.step::before{counter-increment:st;content:counter(st);width:26px;height:26px;border-radius:50%;background:var(--brandgrad);color:#fff;font-weight:800;font-size:12.5px;display:flex;align-items:center;justify-content:center;flex:none}
+.step .sc{font-size:13px}.step .sc b{font-size:13.5px}
+.step .sc div{color:var(--muted);margin-top:2px}
+/* proposal structure list */
+.plist{display:grid;gap:8px}
+.pitem{border:1px solid var(--line);border-radius:11px;background:var(--panel2);overflow:hidden}
+.pitem summary{cursor:pointer;padding:12px 15px;font-size:13.5px;font-weight:700;list-style:none;display:flex;align-items:center;gap:10px}
+.pitem summary::-webkit-details-marker{display:none}
+.pitem summary .pn{width:24px;height:24px;border-radius:7px;background:var(--chipbg);color:var(--accent);font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;flex:none}
+.pitem summary::after{content:"▸";margin-left:auto;color:var(--faint);transition:transform .2s}
+.pitem[open] summary::after{transform:rotate(90deg)}
+.pitem .pbody{padding:0 15px 14px 49px;font-size:12.8px;color:var(--muted);line-height:1.6}
+/* checklist */
+.check{display:grid;gap:8px}
+.citem{display:flex;gap:11px;align-items:flex-start;padding:10px 13px;border:1px solid var(--line);border-radius:10px;background:var(--panel2);cursor:pointer}
+.citem input{margin-top:2px;width:17px;height:17px;accent-color:var(--teal);flex:none;cursor:pointer}
+.citem span{font-size:13px}
+.citem.done span{text-decoration:line-through;color:var(--faint)}
+.gprog{height:7px;border-radius:20px;background:var(--bg2);overflow:hidden;margin:4px 0 14px}
+.gprog i{display:block;height:100%;background:var(--brandgrad);width:0;transition:width .3s}
+/* grant reg links */
+.rlist{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.ritem{border:1px solid var(--line);border-radius:10px;background:var(--panel2);padding:11px 13px;display:flex;flex-direction:column;gap:7px}
+.ritem .rt{font-size:12.8px;font-weight:600}
+.ritem .rl{display:flex;flex-wrap:wrap;gap:6px}
+.callout{background:linear-gradient(135deg,rgba(18,164,160,.1),rgba(31,122,224,.08));border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:12.8px;color:var(--muted);line-height:1.6}
+.callout b{color:var(--ink)}
+@media(max-width:720px){.fcards{grid-template-columns:1fr}.rlist{grid-template-columns:1fr}.gtable{font-size:12px}}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-in">
+    <div class="brand">
+      <div class="mark">ВУ</div>
+      <div><h1>Все для ученого</h1><div class="tag">Нормативно-правовая база науки и технологической политики РК · со ссылками на источники</div></div>
+    </div>
+    <div class="tabs" id="tabs">
+      <button data-view="map" class="on">🗺 Карта</button>
+      <button data-view="grants">🎓 Гранты</button>
+    </div>
+    <div class="hdr-tools">
+      <button class="tbtn" id="theme" title="Сменить тему">🌙</button>
+    </div>
+  </div>
+</header>
+<div id="viewMap">
+<div class="stats" id="stats"></div>
+<div class="layout">
+  <aside class="side">
+    <div class="pyr">
+      <h3>Иерархия юридической силы</h3>
+      <div id="pyramid"></div>
+    </div>
+    <nav class="nav" id="nav"></nav>
+  </aside>
+  <main>
+    <div class="controls">
+      <div class="searchrow">
+        <div class="searchwrap">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input id="search" placeholder="Поиск по 114 документам…" autocomplete="off">
+        </div>
+        <button class="mini" id="expandAll">Развернуть</button>
+        <button class="mini" id="collapseAll">Свернуть</button>
+      </div>
+      <div class="chips" id="tierChips"></div>
+      <div class="chips" id="srcChips"></div>
+    </div>
+    <div id="sections"></div>
+    <div class="nores hidden" id="nores">Ничего не найдено — измените запрос или сбросьте фильтры.</div>
+  </main>
+</div>
+</div><!-- /viewMap -->
+
+<div id="viewGrants" style="display:none">
+<div class="gwrap">
+  <div class="ghero">
+    <h2>🎓 Научные гранты и проекты</h2>
+    <p>Практическая навигация по грантовому финансированию науки в Казахстане: виды финансирования, календарь конкурсов и сроки, порядок подачи, структура заявки, чек-лист и ключевые нормативные документы. Конкурсы проводит <b>Комитет науки МНВО РК</b>; оператор экспертизы и приёма заявок — <b>АО «НЦГНТЭ»</b>.</p>
+  </div>
+
+  <div class="gsec">
+    <h3><span class="em">💰</span>Виды финансирования науки</h3>
+    <p class="gsub">Согласно Закону РК «О науке и технологической политике» и Правилам финансирования науки</p>
+    <div class="fcards">
+      <div class="fcard" style="--tc:var(--c1)"><h4>Базовое финансирование</h4><p>Содержание и развитие инфраструктуры, оплата труда ведущих учёных субъектов науки по утверждённому перечню организаций. Неконкурсное.</p></div>
+      <div class="fcard" style="--tc:var(--c4)"><h4>Грантовое финансирование</h4><p>Конкурсное финансирование научных и научно-технических проектов (в т.ч. молодых учёных, «Жас ғалым»). Срок реализации — до 3 лет. Через ГНТЭ и ННС.</p></div>
+      <div class="fcard" style="--tc:var(--c3)"><h4>Программно-целевое финансирование (ПЦФ)</h4><p>Решение стратегических задач по заказу государственных и отраслевых органов. Научно-технические программы, как правило на 3 года.</p></div>
+      <div class="fcard" style="--tc:var(--c2)"><h4>Коммерциализация РННТД</h4><p>Гранты на вывод результатов научной деятельности на рынок: прототип, MVP, трансфер технологий, стартапы. С сопровождением.</p></div>
+    </div>
+  </div>
+
+  <div class="gsec">
+    <h3><span class="em">📅</span>Календарь конкурсов и сроки</h3>
+    <p class="gsub">Типичные ежегодные окна приёма заявок. Цикл 2026–2028 закрыт по состоянию на июль 2026; объявления по циклу 2027–2029 ожидаются ориентировочно осенью 2026 — проверяйте актуальные даты на ncste.kz.</p>
+    <table class="gtable">
+      <thead><tr><th>Программа</th><th>Окно приёма (типовое)</th><th>Реализация</th><th>Статус</th></tr></thead>
+      <tbody>
+        <tr><td class="prog">Грантовое финансирование НТ-проектов</td><td class="win">~6 окт → 6 ноя</td><td>3 года</td><td><span class="badge b-closed">2026–2028 закрыт</span></td></tr>
+        <tr><td class="prog">Гранты молодых учёных</td><td class="win">~25 сен → 25 окт</td><td>3 года</td><td><span class="badge b-closed">2026–2028 закрыт</span></td></tr>
+        <tr><td class="prog">Молодые учёные «Жас ғалым»</td><td class="win">~29 сен → 29 окт</td><td>3 года</td><td><span class="badge b-closed">2026–2028 закрыт</span></td></tr>
+        <tr><td class="prog">Программно-целевое финансирование (ПЦФ)</td><td class="win">~6 окт → 6 ноя</td><td>3 года</td><td><span class="badge b-closed">по отраслевым мин-вам</span></td></tr>
+        <tr><td class="prog">Коммерциализация РННТД</td><td class="win">~10 дек → 10 янв</td><td>3 года</td><td><span class="badge b-soon">ожидается кон. 2026</span></td></tr>
+        <tr><td class="prog">Базовое финансирование</td><td class="win">по перечню организаций</td><td>ежегодно</td><td><span class="badge b-annual">постоянное</span></td></tr>
+      </tbody>
+    </table>
+    <div class="callout" style="margin-top:14px">📌 <b>Следующие окна:</b> объявления о конкурсах на 2027–2029 годы обычно публикуются за 1–2 месяца до дедлайна, т.е. ориентировочно <b>сентябрь–ноябрь 2026</b> (проекты и молодые учёные) и <b>декабрь 2026</b> (коммерциализация). Актуальные даты — на <a class="lnk gov" href="https://www.ncste.kz/ru/competition" target="_blank" rel="noopener">🔗 ncste.kz</a></div>
+  </div>
+
+  <div class="gsec">
+    <h3><span class="em">📨</span>Как подать заявку</h3>
+    <p class="gsub">Приём — только в электронном виде с ЭЦП через ИС НЦГНТЭ · call-центр 8-727-355-50-02</p>
+    <div class="steps">
+      <div class="step"><div class="sc"><b>Дождитесь объявления конкурса</b><div>Сайт НЦГНТЭ и Комитета науки МНВО РК; сверьте приоритетные направления и конкурсную документацию.</div></div></div>
+      <div class="step"><div class="sc"><b>Зарегистрируйтесь в ИС НЦГНТЭ</b><div>Портал <a class="lnk gov" href="https://is.ncste.kz" target="_blank" rel="noopener">🔗 is.ncste.kz</a> — получите ИРН, привяжите ЭЦП организации и руководителя.</div></div></div>
+      <div class="step"><div class="sc"><b>Сформируйте заявку</b><div>По форме конкурсной документации: научная часть, смета, состав коллектива, приложения. Подпишите ЭЦП.</div></div></div>
+      <div class="step"><div class="sc"><b>Подайте до окончательного срока</b><div>Дедлайн — «включительно». Поздние и неполные заявки не принимаются.</div></div></div>
+      <div class="step"><div class="sc"><b>Государственная научно-техническая экспертиза (ГНТЭ)</b><div>Оценка отечественными и зарубежными экспертами по критериям новизны, реализуемости, результативности.</div></div></div>
+      <div class="step"><div class="sc"><b>Решение Национальных научных советов (ННС)</b><div>ННС ранжируют и рекомендуют проекты к финансированию; при отказе возможна апелляция.</div></div></div>
+      <div class="step"><div class="sc"><b>Договор и финансирование</b><div>С победителями заключается договор; далее — мониторинг реализации и отчётность.</div></div></div>
+    </div>
+  </div>
+
+  <div class="gsec">
+    <h3><span class="em">📝</span>Структура заявки (шаблон)</h3>
+    <p class="gsub">Разверните раздел, чтобы увидеть, что в нём ожидается</p>
+    <div class="plist">
+      <details class="pitem" open><summary><span class="pn">1</span>Титул и приоритетное направление</summary><div class="pbody">Название проекта, руководитель, организация, запрашиваемый бюджет и срок. Явное соответствие приоритетным направлениям развития науки.</div></details>
+      <details class="pitem"><summary><span class="pn">2</span>Аннотация (реферат)</summary><div class="pbody">Сжатое изложение: проблема, цель, задачи, методы, ожидаемые результаты и их значимость. Часто требуется на казахском, русском и английском.</div></details>
+      <details class="pitem"><summary><span class="pn">3</span>Актуальность и научная новизна</summary><div class="pbody">Постановка проблемы, мировой уровень исследований, конкретный пробел (gap), который закрывает проект, и в чём именно новизна.</div></details>
+      <details class="pitem"><summary><span class="pn">4</span>Цель и задачи</summary><div class="pbody">Одна измеримая цель и 3–6 конкретных задач, декомпозированных по годам реализации.</div></details>
+      <details class="pitem"><summary><span class="pn">5</span>Обзор мировых достижений</summary><div class="pbody">Анализ литературы за последние годы, патентный поиск, обоснование выбранного подхода на фоне альтернатив.</div></details>
+      <details class="pitem"><summary><span class="pn">6</span>Методология и план работ</summary><div class="pbody">Методы, оборудование и материалы, календарный план по этапам/годам, распределение задач в коллективе.</div></details>
+      <details class="pitem"><summary><span class="pn">7</span>Ожидаемые результаты и индикаторы</summary><div class="pbody">Публикации в изданиях Q1–Q2 (Web of Science / Scopus), патенты, целевой уровень готовности технологии (TRL), прототипы, ОКР.</div></details>
+      <details class="pitem"><summary><span class="pn">8</span>Научный коллектив</summary><div class="pbody">Руководитель и ведущий учёный (публикационная активность, h-index), доля молодых учёных, зарубежные партнёры.</div></details>
+      <details class="pitem"><summary><span class="pn">9</span>Смета и обоснование бюджета</summary><div class="pbody">Оплата труда, командировки/стажировки, материалы, оборудование, услуги, накладные — в пределах утверждённых норм финансирования и с экономическим обоснованием.</div></details>
+      <details class="pitem"><summary><span class="pn">10</span>Риски, устойчивость и коммерциализация</summary><div class="pbody">Основные риски и меры их снижения; для прикладных проектов — план внедрения/коммерциализации результатов.</div></details>
+    </div>
+  </div>
+
+  <div class="gsec">
+    <h3><span class="em">✅</span>Чек-лист перед подачей</h3>
+    <div class="gprog"><i id="gpBar"></i></div>
+    <div class="check" id="checklist">
+      <label class="citem"><input type="checkbox"><span>Тема соответствует приоритетным направлениям развития науки</span></label>
+      <label class="citem"><input type="checkbox"><span>Оформлены ЭЦП и регистрация в ИС НЦГНТЭ (is.ncste.kz), получен ИРН</span></label>
+      <label class="citem"><input type="checkbox"><span>Руководитель / ведущий учёный отвечает требованиям (публикации, h-index)</span></label>
+      <label class="citem"><input type="checkbox"><span>Пройдена проверка на антиплагиат и соблюдены правила научной этики</span></label>
+      <label class="citem"><input type="checkbox"><span>Смета составлена в пределах утверждённых норм и экономически обоснована</span></label>
+      <label class="citem"><input type="checkbox"><span>Указан целевой уровень готовности технологии (TRL)</span></label>
+      <label class="citem"><input type="checkbox"><span>Запланированы публикации Q1–Q2 и/или патенты, ОКР</span></label>
+      <label class="citem"><input type="checkbox"><span>Приложены письма поддержки/согласия организаций-партнёров</span></label>
+      <label class="citem"><input type="checkbox"><span>Соблюдены все формальные требования конкурсной документации</span></label>
+      <label class="citem"><input type="checkbox"><span>Заявка подписана и подана до окончательного срока (включительно)</span></label>
+    </div>
+  </div>
+
+  <div class="gsec">
+    <h3><span class="em">⚖️</span>Ключевые нормативные документы для грантов</h3>
+    <p class="gsub">Прямые ссылки на официальные акты (открываются на «Карте» с полным контекстом)</p>
+    <div class="rlist">
+      <div class="ritem"><div class="rt">Закон РК «О науке и технологической политике»</div><div class="rl"><a class="lnk adilet" href="https://adilet.zan.kz/rus/docs/Z2400000103" target="_blank" rel="noopener">🔗 adilet</a></div></div>
+      <div class="ritem"><div class="rt">Правила финансирования науки</div><div class="rl"><a class="lnk adilet" href="https://adilet.zan.kz/rus/docs/V2300033613" target="_blank" rel="noopener">🔗 adilet</a></div></div>
+      <div class="ritem"><div class="rt">Правила организации и проведения ГНТЭ</div><div class="rl"><a class="lnk adilet" href="https://adilet.zan.kz/rus/docs/V2400035344" target="_blank" rel="noopener">🔗 adilet</a></div></div>
+      <div class="ritem"><div class="rt">Правила госуслуги «Проведение ГНТЭ»</div><div class="rl"><a class="lnk adilet" href="https://adilet.zan.kz/rus/docs/V2000020821" target="_blank" rel="noopener">🔗 adilet</a></div></div>
+      <div class="ritem"><div class="rt">Методика оценки экономической обоснованности объёма финансирования</div><div class="rl"><span class="nolink">нет ссылки</span></div></div>
+      <div class="ritem"><div class="rt">Методика стоимости услуг экспертов</div><div class="rl"><a class="lnk adilet" href="https://adilet.zan.kz/rus/docs/V2400035578" target="_blank" rel="noopener">🔗 adilet</a></div></div>
+      <div class="ritem"><div class="rt">Правила организации НИР и разработок за счёт бюджета и налоговых льгот</div><div class="rl"><a class="lnk adilet" href="https://adilet.zan.kz/rus/docs/V2400035546" target="_blank" rel="noopener">🔗 adilet</a></div></div>
+      <div class="ritem"><div class="rt">Типовые правила научной этики</div><div class="rl"><a class="lnk adilet" href="https://adilet.zan.kz/rus/docs/V2400035392" target="_blank" rel="noopener">🔗 adilet</a></div></div>
+      <div class="ritem"><div class="rt">Правила НИОКР на основе ГЧП</div><div class="rl"><a class="lnk adilet" href="https://adilet.zan.kz/rus/docs/V2400035385" target="_blank" rel="noopener">🔗 adilet</a></div></div>
+      <div class="ritem"><div class="rt">Правила приобретения НИИ/ОВПО товаров, работ, услуг</div><div class="rl"><a class="lnk adilet" href="https://adilet.zan.kz/rus/docs/V2400035417" target="_blank" rel="noopener">🔗 adilet</a></div></div>
+      <div class="ritem"><div class="rt">Методика стоимости сопровождения грантов на коммерциализацию</div><div class="rl"><a class="lnk adilet" href="https://adilet.zan.kz/rus/docs/G24HN000537" target="_blank" rel="noopener">🔗 adilet</a></div></div>
+      <div class="ritem"><div class="rt">Методики определения уровней готовности технологий (TRL)</div><div class="rl"><a class="lnk adilet" href="https://adilet.zan.kz/rus/docs/V2500035634" target="_blank" rel="noopener">🔗 adilet</a></div></div>
+      <div class="ritem"><div class="rt">Нормы базового финансирования ННТД</div><div class="rl"><a class="lnk adilet" href="https://adilet.zan.kz/rus/docs/G23HN000420" target="_blank" rel="noopener">🔗 adilet</a></div></div>
+      <div class="ritem"><div class="rt">Национальные научные советы (ННС)</div><div class="rl"><a class="lnk adilet" href="https://adilet.zan.kz/rus/docs/V2300033466" target="_blank" rel="noopener">🔗 adilet</a></div></div>
+      <div class="ritem"><div class="rt">Требования к научным изданиям (публикации)</div><div class="rl"><a class="lnk adilet" href="https://adilet.zan.kz/rus/docs/V1600013409" target="_blank" rel="noopener">🔗 adilet</a></div></div>
+      <div class="ritem"><div class="rt">Налоговый кодекс РК (налоговые льготы)</div><div class="rl"><a class="lnk adilet" href="https://adilet.zan.kz/rus/docs/K2500000214" target="_blank" rel="noopener">🔗 adilet</a></div></div>
+    </div>
+    <div class="callout" style="margin-top:16px">🌐 <b>Официальные ресурсы:</b>
+      <a class="lnk gov" href="https://www.ncste.kz/ru/competition" target="_blank" rel="noopener">🔗 НЦГНТЭ — конкурсы</a>
+      <a class="lnk gov" href="https://is.ncste.kz" target="_blank" rel="noopener">🔗 ИС подачи заявок</a>
+      <a class="lnk gov" href="https://www.gov.kz/memleket/entities/science?lang=ru" target="_blank" rel="noopener">🔗 Комитет науки / МНВО</a>
+    </div>
+    <div class="callout" style="margin-top:12px">⚠️ <b>Дисклеймер:</b> сроки приведены по циклу 2026–2028 (закрыт на июль 2026) и являются ориентировочными — они повторяются ежегодно, но точные даты, формы и требования устанавливаются конкурсной документацией каждого конкурса. Всегда сверяйтесь с официальными объявлениями НЦГНТЭ и Комитета науки.</div>
+  </div>
+</div>
+</div><!-- /viewGrants -->
+
+<footer class="foot">
+  <div>Карта построена по сборнику «Все для ученого» (А. Ж. Бибосинов, в. 0.9 · 07.07.2026). 9 разделов · 114 документов · 132 официальные ссылки. Ссылки ведут на adilet.zan.kz, prg.kz, gov.kz и др. Номера страниц — по оригиналу.</div>
+  <div class="credit">Платформа разработана <b>Закиром Джумакуловым</b> · <a href="mailto:zakir86kz@gmail.com">zakir86kz@gmail.com</a></div>
+</footer>
+<button class="fab" id="fab">✎ Предложить правку</button>
+<div class="ovl" id="ovl">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-h">
+      <div class="mi">✎</div>
+      <div><h2>Предложить правку или новый документ</h2><div class="sub">Ваше предложение уйдёт на zakir86kz@gmail.com</div></div>
+      <button class="x" id="mClose" title="Закрыть">✕</button>
+    </div>
+    <div class="modal-b">
+      <div class="seg" id="mSeg">
+        <button data-mode="fix" class="on">✎ Исправление</button>
+        <button data-mode="new">＋ Новый документ</button>
+      </div>
+      <div id="fixFields">
+        <div class="fld"><label>Документ, к которому относится правка <span class="req">*</span></label>
+          <select id="fDoc"></select></div>
+        <div class="fld"><label>Что не так?</label>
+          <select id="fType">
+            <option>Неверная ссылка</option><option>Неверное название</option>
+            <option>Неверный номер страницы</option><option>Документ утратил силу / устарел</option>
+            <option>Дубликат</option><option>Другое</option>
+          </select></div>
+        <div class="fld"><label>Правильное значение / комментарий <span class="req">*</span></label>
+          <textarea id="fVal" placeholder="Например: правильная ссылка https://adilet.zan.kz/rus/docs/... или уточнённое название"></textarea></div>
+      </div>
+      <div id="newFields" style="display:none">
+        <div class="fld"><label>Раздел <span class="req">*</span></label><select id="nSec"></select></div>
+        <div class="fld"><label>Название документа <span class="req">*</span></label>
+          <input id="nTitle" placeholder="Полное наименование нормативного акта"></div>
+        <div class="two">
+          <div class="fld"><label>Ссылка(и)</label><input id="nLink" placeholder="https://adilet.zan.kz/rus/docs/..."></div>
+          <div class="fld"><label>Стр. (ориг.)</label><input id="nPage" placeholder="напр. 14"></div>
+        </div>
+        <div class="fld"><label>Комментарий</label><textarea id="nNote" placeholder="Почему документ следует добавить, дата и номер акта и т. п."></textarea></div>
+      </div>
+      <div class="two">
+        <div class="fld"><label>Ваше имя</label><input id="sName" placeholder="необязательно"></div>
+        <div class="fld"><label>Ваш email</label><input id="sMail" placeholder="для обратной связи"></div>
+      </div>
+    </div>
+    <div class="modal-f">
+      <button class="btn-p" id="mSend">✉ Отправить по почте</button>
+      <button class="btn-s" id="mCopy">⧉ Скопировать</button>
+      <span class="note">офлайн · без сервера</span>
+    </div>
+  </div>
+</div>
+<script>
+const DATA = [
+  {num:"1", color:"c1", tier:"Высший уровень", title:"Указы Президента", page:5, items:[
+    {t:"О структуре Правительства Республики Казахстан", p:5, links:["https://adilet.zan.kz/rus/docs/U990000006_"]},
+    {t:"О мерах по дальнейшему совершенствованию системы государственного управления РК", p:5, links:["https://adilet.zan.kz/rus/docs/U2200000917"]},
+    {t:"Об утверждении Национального плана развития РК до 2029 года", p:5, links:["https://adilet.zan.kz/rus/docs/U2400000611"]},
+    {t:"О создании Национального совета по науке и технологиям при Президенте РК", p:5, links:["https://www.akorda.kz/ru/glavoy-gosudarstva-podpisan-ukaz-o-sozdanii-nacionalnogo-soveta-po-nauke-i-tehnologiyam-pri-prezidente-respubliki-kazahstan-260570"]},
+    {t:"О государственных премиях РК в области науки и техники (аль-Фараби, Байтурсынулы, Абая)", p:5, links:["https://adilet.zan.kz/rus/docs/U1500000993"]},
+  ]},
+  {num:"2", color:"c2", tier:"Законы (профильный)", title:"Закон РК «О науке и технологической политике»", page:5, items:[
+    {t:"О науке и технологической политике (Закон РК № 103-VIII, 01.07.2024)", p:5, links:["https://adilet.zan.kz/rus/docs/Z2400000103"]},
+    {t:"О внесении изменений по вопросам науки, наукоемких территорий и др. (№ 321-VIII)", p:5, links:["https://adilet.zan.kz/rus/docs/Z2600000321"]},
+    {t:"Об оборонной промышленности и государственном оборонном заказе (упоминается)", p:5, links:["https://adilet.zan.kz/rus/docs/Z1900000236"]},
+    {t:"О биологической безопасности РК (упоминается)", p:5, links:["https://adilet.zan.kz/rus/docs/Z2200000122"]},
+  ]},
+  {num:"3", color:"c3", tier:"Постановления Правительства", title:"Постановления Правительства РК", page:7, items:[
+    {t:"Система государственного планирования в Республике Казахстан", p:7, links:["https://adilet.zan.kz/rus/docs/P1700000790"]},
+    {t:"Республиканская бюджетная комиссия (ПП РК № 415 от 07.06.2025)", p:7, links:["https://online.zakon.kz/Document/?doc_id=32850401"]},
+    {t:"Концепция развития высшего образования и науки в РК на 2023–2029 годы", p:8, links:["https://adilet.zan.kz/rus/docs/P2300000248"]},
+    {t:"Высшая научно-техническая комиссия при Правительстве РК", p:8, links:["https://adilet.zan.kz/rus/docs/P2400000826", "https://primeminister.kz/ru/news/prioritetnye-napravleniya-razvitiya-nauki-na-2024-2026-gody-utverzhdeny-v-kazakhstane-25716"]},
+    {t:"Положение о Министерстве науки и высшего образования РК", p:9, links:["https://adilet.zan.kz/rus/docs/P2200000580"]},
+    {t:"Образование Комитета науки", p:9, links:["https://adilet.zan.kz/rus/docs/P060000700_"]},
+    {t:"Организация деятельности государственных органов и их структурных подразделений", p:10, links:["https://adilet.zan.kz/rus/docs/P2100000590"]},
+    {t:"Национальная академия наук РК при Президенте РК", p:10, links:["https://adilet.zan.kz/rus/docs/P2400001142", "https://adilet.zan.kz/rus/docs/P2400000803"]},
+    {t:"Национальный центр государственной научно-технической экспертизы", p:10, links:["https://adilet.zan.kz/rus/docs/P1100000831"]},
+    {t:"Фонд науки", p:10, links:["https://adilet.zan.kz/rus/docs/P060001057_"]},
+    {t:"Система оплаты труда работников организаций, содержащихся за счет средств государственного бюджета", p:10, links:["https://adilet.zan.kz/rus/docs/P1500001193"]},
+    {t:"Разное", p:10, links:["https://adilet.zan.kz/rus/docs/P2600000277", "https://adilet.zan.kz/rus/docs/P2400000948"]},
+  ]},
+  {num:"4", color:"c4", tier:"Приказы министерств", title:"Приказы МНВО РК", page:11, items:[
+    {t:"План развития министерства", p:11, links:["https://www.gov.kz/memleket/entities/sci/documents/details/460888?lang=ru", "https://prg.kz/document/?doc_id=37311728"]},
+    {t:"Бюджетные программы министерства", p:11, links:["https://www.gov.kz/memleket/entities/sci/documents/details/944841?lang=ru"]},
+    {t:"Регламент министерства", p:11, links:["https://prg.kz/document/?doc_id=32471423"]},
+    {t:"Аппарат и ведомства министерства", p:11, links:["https://prg.kz/document/?doc_id=37860618"]},
+    {t:"Положение о Комитете науки", p:12, links:["https://adilet.zan.kz/rus/docs/G22HN000001"]},
+    {t:"Реестр должностей гражданских служащих в сфере образования и науки", p:12, links:["https://adilet.zan.kz/rus/docs/V1600013181"]},
+    {t:"Правила и критерии избрания академиков Национальной академии наук РК", p:12, links:["https://adilet.zan.kz/rus/docs/V2400035119"]},
+    {t:"Нормы базового финансирования научной и (или) научно-технической деятельности", p:13, links:["https://adilet.zan.kz/rus/docs/G23HN000420"]},
+    {t:"Правила распределения бюджетной программы по базовому финансированию субъектов ННТД", p:13, links:["https://adilet.zan.kz/rus/docs/G25HN000212"]},
+    {t:"Перечень организаций, являющихся субъектами базового финансирования", p:13, links:["https://prg.kz/document/?doc_id=32983352"]},
+    {t:"Требования к ведущим ученым, оплата труда которых осуществляется в рамках базового финансирования", p:13, links:["https://adilet.zan.kz/rus/docs/V2400035489"]},
+    {t:"Области на проведение фундаментальных научных исследований", p:14, links:["https://adilet.zan.kz/rus/docs/G24HN000492"]},
+    {t:"Перечень организаций, осуществляющих фундаментальные научные исследования", p:14, links:["https://adilet.zan.kz/rus/docs/G26HN000008"]},
+    {t:"Нормы финансирования научных организаций, осуществляющих фундаментальные исследования", p:15, links:["https://adilet.zan.kz/rus/docs/G23HN000536"]},
+    {t:"Правила государственного учета", p:15, links:["https://adilet.zan.kz/rus/docs/V2400035615"]},
+    {t:"Правила организации и проведения государственной научно-технической экспертизы", p:15, links:["https://adilet.zan.kz/rus/docs/V2400035344"]},
+    {t:"Правила оказания госуслуги «Проведение государственной научно-технической экспертизы»", p:15, links:["https://adilet.zan.kz/rus/docs/V2000020821"]},
+    {t:"Методика стоимости услуг экспертов", p:15, links:["https://adilet.zan.kz/rus/docs/V2400035578"]},
+    {t:"Методика оценки экономической обоснованности объема финансирования проектов и программ", p:15, links:[]},
+    {t:"Правила присвоения статуса «исследовательский университет»", p:16, links:["https://adilet.zan.kz/rus/docs/V2400035208"]},
+    {t:"Методики определения уровней готовности технологий (TRL)", p:16, links:["https://adilet.zan.kz/rus/docs/V2500035634"]},
+    {t:"Научные стажировки", p:16, links:["https://adilet.zan.kz/rus/docs/V2200030834", "https://adilet.zan.kz/rus/docs/G23HN000273", "https://adilet.zan.kz/rus/docs/V2300033308", "https://adilet.zan.kz/rus/docs/V2500035934", "https://adilet.zan.kz/rus/docs/P2200000580"]},
+    {t:"Премии в области науки, государственные научные стипендии", p:16, links:["https://adilet.zan.kz/rus/docs/V2300033417", "https://adilet.zan.kz/rus/docs/V2000020852"]},
+    {t:"Премия «Лучший научный работник»", p:17, links:["https://adilet.zan.kz/rus/docs/V2400035570"]},
+    {t:"Государственные именные стипендии", p:17, links:["https://adilet.zan.kz/rus/docs/V2300033252"]},
+    {t:"Правила финансирования науки", p:17, links:["https://adilet.zan.kz/rus/docs/V2300033613"]},
+    {t:"Правила организации научных исследований и разработок за счет бюджета и налоговых льгот", p:17, links:["https://adilet.zan.kz/rus/docs/V2400035546"]},
+    {t:"Типовые правила научной этики", p:17, links:["https://adilet.zan.kz/rus/docs/V2400035392"]},
+    {t:"Правила организации НИОКР на основе государственно-частного партнерства", p:17, links:["https://adilet.zan.kz/rus/docs/V2400035385"]},
+    {t:"Аккредитация субъектов научной и (или) научно-технической деятельности", p:18, links:["https://adilet.zan.kz/rus/docs/V2000020626", "https://adilet.zan.kz/rus/docs/P2200000580"]},
+    {t:"Типовое положение о научных лабораториях коллективного пользования", p:18, links:["https://adilet.zan.kz/rus/docs/V2400035080"]},
+    {t:"Правила присуждения научных званий", p:18, links:["https://adilet.zan.kz/rus/docs/V1100006939"]},
+    {t:"Типовое положение о диссертационном совете", p:18, links:["https://adilet.zan.kz/rus/docs/V1100006929"]},
+    {t:"Правила присуждения степеней", p:18, links:["https://adilet.zan.kz/rus/docs/V1100006951"]},
+    {t:"Правила целевой подготовки докторов философии PhD в ОВПО", p:18, links:["https://adilet.zan.kz/rus/docs/V1200007707"]},
+    {t:"Правила государственной регистрации диссертаций", p:19, links:["https://adilet.zan.kz/rus/docs/V2400035193"]},
+    {t:"Классификатор научных направлений", p:19, links:["https://adilet.zan.kz/rus/docs/G24HN000466"]},
+    {t:"Национальные научные советы", p:19, links:["https://adilet.zan.kz/rus/docs/V2300033466", "https://adilet.zan.kz/rus/docs/G25HN000094"]},
+    {t:"Апелляционная комиссия", p:19, links:["https://adilet.zan.kz/rus/docs/V2300033328"]},
+    {t:"Типовое положение о научно-техническом совете", p:20, links:["https://adilet.zan.kz/rus/docs/V2400035287"]},
+    {t:"Мониторинг реализации проектов и программ", p:21, links:["https://adilet.zan.kz/rus/docs/V2400035566"]},
+    {t:"Правила приобретения НИИ и ОВПО товаров, работ, услуг для научных исследований за счет бюджета", p:21, links:["https://adilet.zan.kz/rus/docs/V2400035417"]},
+    {t:"Методика стоимости услуг сопровождения грантового финансирования коммерциализации РННТД", p:21, links:["https://adilet.zan.kz/rus/docs/G24HN000537"]},
+    {t:"Типовое положение о консультативно-совещательном органе научной организации", p:21, links:["https://adilet.zan.kz/rus/docs/V2400035098"]},
+    {t:"Требования к научным изданиям для включения в перечень рекомендуемых для публикаций", p:21, links:["https://adilet.zan.kz/rus/docs/V1600013409"]},
+    {t:"Отраслевая система поощрения МНВО РК", p:21, links:["https://adilet.zan.kz/rus/docs/V2400034308"]},
+    {t:"Номенклатура видов организаций высшего и (или) послевузовского образования", p:21, links:["https://adilet.zan.kz/rus/docs/V2300033135"]},
+    {t:"Сбор, обработка и анализ научно-технической информации", p:22, links:["https://adilet.zan.kz/rus/docs/G25HN000044", "https://adilet.zan.kz/rus/docs/P2200000580"]},
+    {t:"Правила выдачи уведомлений", p:22, links:["https://adilet.zan.kz/rus/docs/V2400035329"]},
+    {t:"Правила определения стоимости исследований, консалтинговых услуг МНВО РК", p:22, links:["https://adilet.zan.kz/rus/docs/G25HN000277"]},
+    {t:"Правила определения стоимости государственного задания МНВО РК", p:22, links:["https://adilet.zan.kz/rus/docs/G25HN000278"]},
+    {t:"Натуральные нормы МНВО РК", p:22, links:["https://adilet.zan.kz/rus/docs/P2200000580"]},
+    {t:"Правила осуществления платных видов деятельности госучреждениями в сфере науки", p:23, links:["https://adilet.zan.kz/rus/docs/V2500036285"]},
+    {t:"Норматив отчисления части чистого дохода госпредприятий в сфере науки и высшего образования", p:23, links:["https://adilet.zan.kz/rus/docs/P2200000580"]},
+    {t:"Правила формирования рабочих коллекций патогенных и промышленных микроорганизмов", p:23, links:["https://adilet.zan.kz/rus/docs/V2400035273"]},
+    {t:"Программа подготовки кадров в области коммерциализации РННТД", p:23, links:["https://adilet.zan.kz/rus/docs/P2200000580"]},
+    {t:"Правила оплаты труда научных работников", p:23, links:["https://adilet.zan.kz/rus/docs/G24HN000592"]},
+    {t:"Венчурное финансирование", p:23, links:["https://adilet.zan.kz/rus/docs/P2200000580"]},
+    {t:"Наукограды и научно-технологические парки", p:24, links:[]},
+    {t:"Выдача лицензии на экспорт коллекционных материалов (минералогия, палеонтология, кости ископаемых)", p:24, links:["https://adilet.zan.kz/rus/docs/V2000021129"]},
+    {t:"Разное", p:24, links:["https://adilet.zan.kz/rus/docs/V2600038673", "https://prg.kz/document/?doc_id=33130636", "https://adilet.zan.kz/rus/docs/V2000021265", "https://adilet.zan.kz/rus/docs/V2000021361", "https://adilet.zan.kz/rus/docs/V2600037995", "https://adilet.zan.kz/rus/docs/V2000021380", "https://adilet.zan.kz/rus/docs/V2000021367", "https://adilet.zan.kz/rus/docs/V2000021360", "https://adilet.zan.kz/rus/docs/P2200000580", "https://adilet.zan.kz/rus/docs/V2200027609", "https://adilet.zan.kz/rus/docs/V2200028239", "https://adilet.zan.kz/rus/docs/V2200027772"]},
+  ]},
+  {num:"5", color:"c4", tier:"Приказы министерств", title:"Совместные приказы МНВО РК и отраслевых министерств", page:27, items:[
+    {t:"По обязательствам недропользователей в период добычи твердых полезных ископаемых", p:27, links:["https://adilet.zan.kz/rus/docs/V1800017065"]},
+    {t:"По обязательствам недропользователей в период углеводородов", p:27, links:["https://adilet.zan.kz/rus/docs/V1800017096"]},
+    {t:"По обязательствам недропользователей в период добычи урана", p:27, links:["https://adilet.zan.kz/rus/docs/V2500037686"]},
+  ]},
+  {num:"6", color:"c2", tier:"Законы (профильный)", title:"Кодексы РК", page:28, items:[
+    {t:"Административный процедурно-процессуальный кодекс", p:28, links:["https://adilet.zan.kz/rus/docs/K2000000350"]},
+    {t:"Кодекс о недрах и недропользовании", p:28, links:["https://adilet.zan.kz/rus/docs/K1700000125"]},
+    {t:"Налоговый кодекс", p:29, links:["https://adilet.zan.kz/rus/docs/K2500000214"]},
+    {t:"Предпринимательский кодекс", p:30, links:["https://adilet.zan.kz/rus/docs/K1500000375"]},
+    {t:"Строительный кодекс", p:31, links:["https://adilet.zan.kz/rus/docs/K2600000253"]},
+    {t:"Бюджетный кодекс", p:31, links:["https://adilet.zan.kz/rus/docs/K2500000171"]},
+    {t:"Трудовой кодекс", p:32, links:["https://adilet.zan.kz/rus/docs/K1500000414"]},
+    {t:"Гражданский кодекс", p:33, links:["https://adilet.zan.kz/rus/docs/K940001000_"]},
+    {t:"Цифровой кодекс", p:34, links:["https://adilet.zan.kz/rus/docs/K2600000255"]},
+  ]},
+  {num:"7", color:"c2", tier:"Законы (профильный)", title:"Законы РК", page:35, items:[
+    {t:"О правовых актах", p:35, links:["https://adilet.zan.kz/rus/docs/Z1600000480"]},
+    {t:"О государственном имуществе", p:35, links:["https://adilet.zan.kz/rus/docs/Z1100000413"]},
+    {t:"Об образовании", p:36, links:["https://adilet.zan.kz/rus/docs/Z070000319_"]},
+    {t:"О государственных закупках", p:36, links:["https://adilet.zan.kz/rus/docs/Z2400000106"]},
+    {t:"Об авторском праве и смежных правах", p:37, links:["https://adilet.zan.kz/rus/docs/Z960000006_"]},
+    {t:"О промышленной политике", p:37, links:["https://adilet.zan.kz/rus/docs/Z2100000086"]},
+    {t:"О государственно-частном партнерстве", p:37, links:["https://adilet.zan.kz/rus/docs/Z1500000379"]},
+    {t:"О специальных экономических и индустриальных зонах", p:37, links:["https://adilet.zan.kz/rus/docs/Z1900000242"]},
+    {t:"О государственном аудите и финансовом контроле", p:37, links:["https://adilet.zan.kz/rus/docs/Z1500000392"]},
+    {t:"О местном государственном управлении и самоуправлении", p:38, links:["https://adilet.zan.kz/rus/docs/Z010000148_"]},
+    {t:"Об охране и использовании объектов историко-культурного наследия", p:38, links:["https://adilet.zan.kz/rus/docs/Z1900000288"]},
+    {t:"О республиканском бюджете", p:38, links:["https://adilet.zan.kz/rus/docs/Z2500000239"]},
+    {t:"О государственных и социально ответственных услугах", p:38, links:["https://adilet.zan.kz/rus/docs/Z1300000088"]},
+  ]},
+  {num:"8", color:"c4", tier:"Приказы министерств", title:"Приказы отраслевых министерств", page:39, items:[
+    {t:"Методики разработки Национального плана развития РК, планов развития ГО и ост.", p:39, links:["https://adilet.zan.kz/rus/docs/G25NT000128"]},
+    {t:"Порядок организации деятельности Республиканской бюджетной комиссии", p:39, links:["https://prg.kz/document/?doc_id=33911084"]},
+    {t:"Правила организации научных исследований в рамках государственного оборонного заказа", p:39, links:["https://adilet.zan.kz/rus/docs/V1900019602"]},
+    {t:"Положения о научно-технических советах", p:39, links:["https://adilet.zan.kz/rus/docs/G24JVM00382", "https://adilet.zan.kz/rus/docs/G24F0000333", "https://adilet.zan.kz/rus/docs/G25V0000083", "https://prg.kz/document/?doc_id=35807777", "https://adilet.zan.kz/rus/docs/G24B0001102"]},
+    {t:"Классификатор перечня товаров (работ, услуг) государственных учреждений", p:40, links:["https://adilet.zan.kz/rus/docs/G25E0000219"]},
+    {t:"Разное", p:40, links:["https://adilet.zan.kz/rus/docs/V1800018075", "https://adilet.zan.kz/rus/docs/V2300033128"]},
+  ]},
+  {num:"9", color:"c9", tier:"Стандарты", title:"Стандарты", page:40, items:[
+    {t:"Общий классификатор видов экономической деятельности", p:40, links:["https://prg.kz/document/?doc_id=33987425"]},
+  ]},
+];
+const TIERS=["Высший уровень","Законы (профильный)","Постановления Правительства","Приказы министерств","Стандарты"];
+const TIER_COLOR={"Высший уровень":"var(--c1)","Законы (профильный)":"var(--c2)","Постановления Правительства":"var(--c3)","Приказы министерств":"var(--c4)","Стандарты":"var(--c9)"};
+const CVAR={c1:"var(--c1)",c2:"var(--c2)",c3:"var(--c3)",c4:"var(--c4)",c9:"var(--c9)"};
+function host(u){try{const h=new URL(u).hostname.replace("www.","");if(h.includes("adilet"))return["adilet","adilet"];if(h.includes("prg"))return["prg","prg.kz"];if(h.includes("gov.kz"))return["gov","gov.kz"];if(h.includes("akorda"))return["gov","akorda"];if(h.includes("primeminister"))return["gov","pm.kz"];if(h.includes("zakon"))return["other","zakon.kz"];return["other",h.split(".")[0]]}catch(e){return["other","ссылка"]}}
+const state={q:"",tiers:new Set(),srcs:new Set()};
+const $=s=>document.querySelector(s);
+// stats
+const totalDocs=DATA.reduce((s,d)=>s+d.items.length,0);
+const totalLinks=new Set(DATA.flatMap(d=>d.items.flatMap(i=>i.links.map(u=>u.split("#")[0])))).size;
+const mnvo=DATA.find(d=>d.num==="4").items.length;
+const laws=DATA.find(d=>d.num==="6").items.length+DATA.find(d=>d.num==="7").items.length;
+const govr=DATA.find(d=>d.num==="3").items.length;
+[["Разделов",DATA.length],["Документов",totalDocs],["Ссылок",totalLinks],["Приказов МНВО",mnvo],["Кодексов и законов",laws],["Постановлений",govr]].forEach(([l,n])=>{
+  const d=document.createElement("div");d.className="stat";d.innerHTML=`<div class="n">${n}</div><div class="l">${l}</div>`;$("#stats").appendChild(d);
+});
+// pyramid
+const tierCounts={};TIERS.forEach(t=>tierCounts[t]=DATA.filter(d=>d.tier===t).reduce((s,d)=>s+d.items.length,0));
+const maxW=100,minW=44;
+$("#pyramid").innerHTML=TIERS.map((t,i)=>{
+  const w=minW+(maxW-minW)*(i/(TIERS.length-1));
+  return `<div class="prow" data-tier="${t}"><div class="pbar" style="width:${w}%;background:${TIER_COLOR[t]}">${tierCounts[t]}</div><div class="pl">${t}</div></div>`;
+}).join("");
+document.querySelectorAll(".prow").forEach(r=>r.onclick=()=>{toggleTier(r.dataset.tier);});
+// nav grouped by tier
+const nav=$("#nav");
+TIERS.forEach(t=>{
+  const secs=DATA.filter(d=>d.tier===t);if(!secs.length)return;
+  const g=document.createElement("div");g.className="navgrp";g.textContent=t;nav.appendChild(g);
+  secs.forEach(s=>{
+    const a=document.createElement("div");a.className="navlink";a.dataset.sec=s.num;
+    a.innerHTML=`<span class="dot" style="background:${CVAR[s.color]}"></span><span>${s.num}. ${s.title}</span><span class="cc">${s.items.length}</span>`;
+    a.onclick=()=>{const el=document.getElementById("sec"+s.num);el.classList.add("open");el.scrollIntoView({behavior:"smooth",block:"start"});};
+    nav.appendChild(a);
+  });
+});
+// tier chips
+const tc=$("#tierChips");tc.innerHTML='<span class="lbl">Уровень</span>';
+TIERS.forEach(t=>{const c=document.createElement("span");c.className="chip";c.dataset.tier=t;
+  c.innerHTML=`<span class="cd" style="background:${TIER_COLOR[t]}"></span>${t}`;c.onclick=()=>toggleTier(t);tc.appendChild(c);});
+// source chips
+const sc=$("#srcChips");sc.innerHTML='<span class="lbl">Источник</span>';
+[["adilet","adilet.zan.kz"],["prg","prg.kz"],["gov","gov.kz / akorda"],["other","прочие"]].forEach(([k,lbl])=>{
+  const c=document.createElement("span");c.className="chip";c.dataset.src=k;c.textContent=lbl;c.onclick=()=>toggleSrc(k);sc.appendChild(c);});
+function toggleTier(t){state.tiers.has(t)?state.tiers.delete(t):state.tiers.add(t);syncChips();render();}
+function toggleSrc(s){state.srcs.has(s)?state.srcs.delete(s):state.srcs.add(s);syncChips();render();}
+function syncChips(){
+  document.querySelectorAll("[data-tier]").forEach(el=>{if(el.classList.contains("chip")||el.classList.contains("prow"))el.classList.toggle("on",state.tiers.has(el.dataset.tier)&&el.classList.contains("chip"));});
+  document.querySelectorAll(".chip[data-src]").forEach(el=>el.classList.toggle("on",state.srcs.has(el.dataset.src)));
+}
+// render sections
+function linkChips(links){
+  if(!links.length)return '<span class="nolink">нет ссылки</span>';
+  let html=links.map(u=>{const[cls,lbl]=host(u);return `<a class="lnk ${cls}" href="${u}" target="_blank" rel="noopener">🔗 ${lbl}</a>`;}).join("");
+  html+=`<button class="copy" title="Копировать ссылку" data-url="${links[0]}">⧉</button>`;
+  return html;
+}
+const secWrap=$("#sections");
+function build(){
+  secWrap.innerHTML="";
+  DATA.forEach(s=>{
+    const el=document.createElement("section");el.className="sec";el.id="sec"+s.num;el.style.setProperty("--sc",CVAR[s.color]);
+    el.dataset.tier=s.tier;
+    el.innerHTML=`<div class="sec-h"><div class="snum">${s.num}</div><div class="st">${s.title}</div>
+      <span class="stier">${s.tier}</span><span class="scount">${s.items.length} док. · с.${s.page}</span>
+      <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m9 18 6-6-6-6"/></svg></div>
+      <div class="sec-b">${s.items.map((it,i)=>`<div class="doc" data-links='${JSON.stringify(it.links.map(u=>host(u)[0]))}'>
+        <span class="dn">${i+1}</span><div class="dt">${it.t}</div>
+        <div class="drow"><span class="pg">с. ${it.p}</span>${linkChips(it.links)}</div></div>`).join("")}</div>`;
+    el.querySelector(".sec-h").onclick=()=>el.classList.toggle("open");
+    secWrap.appendChild(el);
+  });
+  secWrap.querySelectorAll(".copy").forEach(b=>b.onclick=e=>{e.stopPropagation();navigator.clipboard.writeText(b.dataset.url);b.textContent="✓";b.classList.add("done");setTimeout(()=>{b.textContent="⧉";b.classList.remove("done")},1200);});
+}
+build();
+// filtering + search
+function render(){
+  const q=state.q.trim().toLowerCase();let anyVis=false;
+  document.querySelectorAll(".sec").forEach(sec=>{
+    const tierOk=state.tiers.size===0||state.tiers.has(sec.dataset.tier);
+    let secHasVisible=false;
+    sec.querySelectorAll(".doc").forEach(doc=>{
+      const dt=doc.querySelector(".dt");const raw=dt.textContent;
+      const textOk=!q||raw.toLowerCase().includes(q);
+      const srcs=JSON.parse(doc.dataset.links||"[]");
+      const srcOk=state.srcs.size===0||srcs.some(s=>state.srcs.has(s));
+      const vis=tierOk&&textOk&&srcOk;
+      doc.classList.toggle("hidden",!vis);
+      dt.innerHTML=(q&&textOk)?raw.replace(new RegExp("("+q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","ig"),"<mark>$1</mark>"):raw;
+      if(vis)secHasVisible=true;
+    });
+    const showSec=tierOk&&secHasVisible;
+    sec.classList.toggle("hidden",!showSec);
+    if(showSec){anyVis=true;if(q||state.srcs.size)sec.classList.add("open");}
+  });
+  $("#nores").classList.toggle("hidden",anyVis);
+  document.querySelectorAll(".navlink").forEach(n=>{const sec=document.getElementById("sec"+n.dataset.sec);n.style.display=sec.classList.contains("hidden")?"none":"";});
+}
+$("#search").addEventListener("input",e=>{state.q=e.target.value;render();});
+$("#expandAll").onclick=()=>document.querySelectorAll(".sec:not(.hidden)").forEach(s=>s.classList.add("open"));
+$("#collapseAll").onclick=()=>document.querySelectorAll(".sec").forEach(s=>s.classList.remove("open"));
+// scroll spy
+const observer=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){document.querySelectorAll(".navlink").forEach(n=>n.classList.toggle("active",n.dataset.sec===e.target.id.replace("sec","")));}})},{rootMargin:"-140px 0px -70% 0px"});
+document.querySelectorAll(".sec").forEach(s=>observer.observe(s));
+// theme
+const themeBtn=$("#theme");
+function setTheme(t){document.documentElement.dataset.theme=t;themeBtn.textContent=t==="dark"?"☀️":"🌙";try{localStorage.setItem("vu-theme",t)}catch(e){}}
+themeBtn.onclick=()=>setTheme(document.documentElement.dataset.theme==="dark"?"light":"dark");
+try{const saved=localStorage.getItem("vu-theme");if(saved)setTheme(saved);}catch(e){}
+// open first section
+document.querySelector(".sec")?.classList.add("open");
+
+// ===== Suggest / correction tool =====
+const SUBMIT_EMAIL="zakir86kz@gmail.com";
+const ovl=$("#ovl");let mode="fix";
+// populate document select (grouped)
+const fDoc=$("#fDoc");
+DATA.forEach(s=>{const og=document.createElement("optgroup");og.label=`${s.num}. ${s.title}`;
+  s.items.forEach((it,i)=>{const o=document.createElement("option");o.value=`${s.num}.${i+1}`;
+    o.textContent=`${s.num}.${i+1} — ${it.t.length>70?it.t.slice(0,70)+"…":it.t}`;og.appendChild(o);});
+  fDoc.appendChild(og);});
+// populate section select
+const nSec=$("#nSec");
+DATA.forEach(s=>{const o=document.createElement("option");o.value=s.num;o.textContent=`${s.num}. ${s.title}`;nSec.appendChild(o);});
+// open/close
+function openM(){ovl.classList.add("show");}
+function closeM(){ovl.classList.remove("show");}
+$("#fab").onclick=openM;$("#mClose").onclick=closeM;
+ovl.addEventListener("click",e=>{if(e.target===ovl)closeM();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&ovl.classList.contains("show"))closeM();});
+// mode toggle
+$("#mSeg").querySelectorAll("button").forEach(b=>b.onclick=()=>{
+  mode=b.dataset.mode;
+  $("#mSeg").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));
+  $("#fixFields").style.display=mode==="fix"?"":"none";
+  $("#newFields").style.display=mode==="new"?"":"none";
+});
+// find current link(s) for a selected doc key
+function docByKey(k){const[sn,idx]=k.split(".");const s=DATA.find(d=>d.num===sn);return s?{sec:s,item:s.items[+idx-1]}:null;}
+// build message
+function buildMsg(){
+  const name=$("#sName").value.trim(),mail=$("#sMail").value.trim();
+  let subject,body;
+  if(mode==="fix"){
+    const k=$("#fDoc").value,ctx=docByKey(k);
+    if(!ctx||!$("#fVal").value.trim())return null;
+    subject=`[Все для ученого] Исправление — п. ${k}`;
+    body=`ТИП: Исправление\n`+
+      `Документ: ${k} — ${ctx.item.t}\n`+
+      `Раздел: ${ctx.sec.num}. ${ctx.sec.title}\n`+
+      `Текущая ссылка: ${ctx.item.links.join(", ")||"—"}\n`+
+      `Стр. в оригинале: ${ctx.item.p}\n`+
+      `Что не так: ${$("#fType").value}\n`+
+      `Правильное значение / комментарий:\n${$("#fVal").value.trim()}\n`;
+  }else{
+    const title=$("#nTitle").value.trim();
+    if(!title)return null;
+    const sec=DATA.find(d=>d.num===$("#nSec").value);
+    subject=`[Все для ученого] Новый документ — ${title.slice(0,50)}`;
+    body=`ТИП: Новый документ\n`+
+      `Раздел: ${sec.num}. ${sec.title}\n`+
+      `Название: ${title}\n`+
+      `Ссылка(и): ${$("#nLink").value.trim()||"—"}\n`+
+      `Стр. в оригинале: ${$("#nPage").value.trim()||"—"}\n`+
+      `Комментарий:\n${$("#nNote").value.trim()||"—"}\n`;
+  }
+  body+=`\n— — —\nАвтор предложения: ${name||"—"}${mail?" <"+mail+">":""}\nОтправлено из карты «Все для ученого»`;
+  return{subject,body};
+}
+function validate(){
+  if(mode==="fix"&&!$("#fVal").value.trim()){$("#fVal").focus();return false;}
+  if(mode==="new"&&!$("#nTitle").value.trim()){$("#nTitle").focus();return false;}
+  return true;
+}
+$("#mSend").onclick=()=>{
+  if(!validate())return;const m=buildMsg();if(!m)return;
+  window.location.href=`mailto:${SUBMIT_EMAIL}?subject=${encodeURIComponent(m.subject)}&body=${encodeURIComponent(m.body)}`;
+};
+$("#mCopy").onclick=()=>{
+  if(!validate())return;const m=buildMsg();if(!m)return;
+  const txt=`Кому: ${SUBMIT_EMAIL}\nТема: ${m.subject}\n\n${m.body}`;
+  navigator.clipboard.writeText(txt).then(()=>{const b=$("#mCopy");b.textContent="✓ Скопировано";b.classList.add("ok");setTimeout(()=>{b.textContent="⧉ Скопировать";b.classList.remove("ok")},1600);});
+};
+
+// ===== Tabs: Карта / Гранты =====
+const views={map:$("#viewMap"),grants:$("#viewGrants")};
+$("#tabs").querySelectorAll("button").forEach(b=>b.onclick=()=>{
+  const v=b.dataset.view;
+  $("#tabs").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));
+  views.map.style.display=v==="map"?"":"none";
+  views.grants.style.display=v==="grants"?"":"none";
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+// ===== Checklist progress =====
+(function(){
+  const boxes=[...document.querySelectorAll("#checklist input")];
+  const bar=$("#gpBar");
+  function upd(){const d=boxes.filter(b=>b.checked).length;bar.style.width=(d/boxes.length*100)+"%";
+    boxes.forEach(b=>b.closest(".citem").classList.toggle("done",b.checked));}
+  boxes.forEach(b=>b.addEventListener("change",upd));upd();
+})();
+</script>
+</body>
+</html>
