@@ -53,12 +53,11 @@ a:hover{color:var(--accent)}
 .side{position:sticky;top:86px;display:flex;flex-direction:column;gap:16px}
 .pyr{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
 .pyr h3{margin:0 0 10px;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:700}
-.prow{display:flex;align-items:center;gap:9px;margin:5px 0;cursor:pointer;border-radius:8px;padding:4px 5px}
+.prow{display:flex;flex-direction:column;align-items:stretch;gap:4px;margin:6px 0;cursor:pointer;border-radius:8px;padding:5px 6px;border:1px solid transparent}
 .prow:hover{background:var(--panel2)}
-.prow{border:1px solid transparent}
 .prow.on{background:var(--chipbg);border-color:var(--accent)}
-.pbar{height:22px;border-radius:5px;flex:none;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:11px}
-.prow .pl{font-size:11.5px;color:var(--ink);font-weight:500;line-height:1.2}
+.pbar{height:20px;border-radius:5px;flex:none;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:11px;min-width:32px;max-width:100%}
+.prow .pl{font-size:11.5px;color:var(--ink);font-weight:500;line-height:1.25;word-break:break-word}
 .nav{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px;box-shadow:var(--shadow);max-height:46vh;overflow:auto}
 .navgrp{font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:var(--faint);font-weight:700;margin:10px 8px 4px}
 .navgrp:first-child{margin-top:2px}
